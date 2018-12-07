@@ -1,34 +1,52 @@
-import React, { Component } from 'react';
-import './App.css';
-import gamesData from './gamesData'
+import React from 'react'
+import './App.css'
 import TeamList from './components/TeamList'
 import PlayerDetails from './components/PlayerDetails'
 import NavHeader from './components/Header'
-import 'semantic-ui-css/semantic.min.css';
+import { connect } from 'react-redux'
+import 'semantic-ui-css/semantic.min.css'
 
 
-class App extends Component {
-  state = {
-    teams: gamesData.teams,
-    selectedPlayer: null
-  }
+const App = ({selectedPlayer}) => {
+  // state = {
+  //   teams: gamesData.teams,
+  //   selectedPlayer: null
+  // }
+  //
+  // handleSelectPlayer = (player) => {
+  //   this.setState({
+  //     selectedPlayer: player
+  //   })
+  // }
 
-  handleSelectPlayer = (player) => {
-    this.setState({
-      selectedPlayer: player
-    })
-  }
+  return (
+    <div className="App">
+      <NavHeader />
+      <TeamList />
+      {!selectedPlayer ? <div> Click Player for Details </div> :
+        <PlayerDetails selectedPlayer={selectedPlayer}/>}
+    </div>
+  );
+}
 
-  render() {
-    return (
-      <div className="App">
-        <NavHeader />
-        <TeamList teams={this.state.teams} selectPlayer={this.handleSelectPlayer}/>
-        {!this.state.selectedPlayer ? <div> Click Player for Details </div> :
-          <PlayerDetails selectedPlayer={this.state.selectedPlayer}/>}
-      </div>
-    );
+
+const mapStateToProps = state => {
+  return {
+      selectedPlayer: state.selectedPlayer
   }
 }
 
-export default App;
+export default connect(mapStateToProps)(App)
+
+
+
+
+
+
+
+
+
+
+
+
+//
